@@ -6,22 +6,50 @@ class SliverListScreen extends StatelessWidget {
     return Scaffold(
       // body: _Lista(),
       // body: _Titulo(),
-      body: _MainScroll(),
+      body: Stack(children: [
+        _MainScroll(),
+        Positioned(bottom: -10, right: 0, child: _NewListButton())
+      ]),
+    );
+  }
+}
+
+class _NewListButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
+    return ButtonTheme(
+      minWidth: size.width * 0.9,
+      height: 100,
+      child: RaisedButton(
+        onPressed: () {},
+        color: Color(0xffed6762),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(40))),
+        child: Text(
+          'Añadir nueva lista',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 3),
+        ),
+      ),
     );
   }
 }
 
 class _MainScroll extends StatelessWidget {
-
   final items = [
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Color(0xffF7CDD5) ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Color(0xffF7CDD5) ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
   ];
 
   @override
@@ -35,21 +63,22 @@ class _MainScroll extends StatelessWidget {
         //   title: Text('holita'),
         // ),
         SliverPersistentHeader(
-          floating: true,
+            floating: true,
             delegate: _SliverCustomHeaderDelegate(
-              minHeight: 190,
-              maxHeight: 200,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                color: Colors.white,
-                child: _Titulo(),
-              )
-            )
-        ),
+                minHeight: 190,
+                maxHeight: 200,
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  color: Colors.white,
+                  child: _Titulo(),
+                ))),
         SliverList(
-          delegate: SliverChildListDelegate(
-            items
-          ),
+          delegate: SliverChildListDelegate([
+            ...items,
+            SizedBox(
+              height: 100,
+            )
+          ]),
         )
       ],
     );
@@ -57,13 +86,14 @@ class _MainScroll extends StatelessWidget {
 }
 
 class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
-
   final double minHeight;
   final double maxHeight;
   final Widget child;
 
-
-  _SliverCustomHeaderDelegate({@required this.minHeight, @required this.maxHeight, @required this.child});
+  _SliverCustomHeaderDelegate(
+      {@required this.minHeight,
+      @required this.maxHeight,
+      @required this.child});
 
   @override
   double get maxExtent => this.maxHeight;
@@ -74,28 +104,29 @@ class _SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant _SliverCustomHeaderDelegate oldDelegate) {
     return this.maxHeight != oldDelegate.maxHeight ||
-            this.minHeight != oldDelegate.minHeight ||
-            this.child != oldDelegate.child;
+        this.minHeight != oldDelegate.minHeight ||
+        this.child != oldDelegate.child;
   }
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child,);
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return SizedBox.expand(
+      child: child,
+    );
   }
 }
 
-
 class _Lista extends StatelessWidget {
-
   final items = [
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Color(0xffF7CDD5) ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
-    _ListItem( 'Orange', Color(0xffF08F66) ),
-    _ListItem( 'Family', Color(0xffF2A38A) ),
-    _ListItem( 'Subscriptions', Color(0xffF7CDD5) ),
-    _ListItem( 'Books', Color(0xffFCEBAF) ),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
+    _ListItem('Orange', Color(0xffF08F66)),
+    _ListItem('Family', Color(0xffF2A38A)),
+    _ListItem('Subscriptions', Color(0xffF7CDD5)),
+    _ListItem('Books', Color(0xffFCEBAF)),
   ];
 
   @override
@@ -110,7 +141,6 @@ class _Lista extends StatelessWidget {
 }
 
 class _ListItem extends StatelessWidget {
-
   final String titulo;
   final Color color;
 
